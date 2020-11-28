@@ -4,10 +4,10 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 // search with array of tags
-$app->post('/api/tags', function(Request $req, Response $res, array $args){
+$app->get('/api/tagsearch/{array}', function(Request $req, Response $res, array $args){
     
     try{
-        $tags = $req->getParam("tags");
+        $tags = explode(",",$args["array"]);
         $problems = getProblems($tags[0]);
         if(!isset($problems["success"]) && count($problems)){
 
@@ -194,6 +194,15 @@ $app->get('/api/problems/{difficulty}', function(Request $req, Response $res, ar
     }
 
 });
+
+
+
+
+
+
+
+
+
 
 
 

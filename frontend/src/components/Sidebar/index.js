@@ -13,7 +13,8 @@ import {
     Notations,
     Tag,
     TagCount,
-    TagName
+    TagName,
+    Cross
 } from "./SidebarStyle";
 import { get } from "../../apis/fetch";
 import axios from "axios";
@@ -43,6 +44,7 @@ const Sidebar = ({ switchDifficulty, found, switchSearch, search }) => {
 
     useEffect(()=>{
 
+        setTags([]);
         if(!tagSearch || !tagSearch.trim().length)return
         let cancel;
         axios({
@@ -56,7 +58,7 @@ const Sidebar = ({ switchDifficulty, found, switchSearch, search }) => {
         }).then((res)=>{
             if(res.data && res.data.length){
                 setTags(res.data);
-            } else setTags([]);
+            } 
         }).catch(e=>!axios.isCancel(e) && console.log(e));
 
         return ()=>cancel();
@@ -106,7 +108,7 @@ const Sidebar = ({ switchDifficulty, found, switchSearch, search }) => {
             </Difficulty>
 
 
-            <SearchBar onSubmit={() => { }}>
+            <SearchBar onSubmit={(e) => {e.preventDefault()}}>
                 <Input 
                     placeholder="Type and Enter" 
                     required
@@ -160,7 +162,9 @@ const Sidebar = ({ switchDifficulty, found, switchSearch, search }) => {
                         <Tag key={index}>
                             <TagName>
                                 {tag}
+                                <Cross onClick={()=>{switchSearch(search.replaceAll(tag,""))}}/>
                             </TagName>
+                            
                         </Tag>
                     );
                 })}

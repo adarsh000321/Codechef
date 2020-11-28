@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import {FaSearch} from "react-icons/fa";
+import {AiOutlineLogout} from "react-icons/ai";
 
 
 export const HeaderContainer = styled.nav`
@@ -31,20 +32,27 @@ export const HeaderBtn = styled.div`
     flex: 1;
     /* border: 1px solid red; */
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-end;
     align-items: center;
+    &:hover{
+        cursor: pointer;
+    }
 `
 
 export const Button = styled.button`
     padding: 16px 22px;
+    margin-right: 10px;
     border-radius: 30px;
     outline: none;
     border:none;
     white-space: nowrap;
+    display: flex;
+    align-items: center;
 
     &:hover {
         transition: 0.3s ease-in-out;
         background: #A9A9A9;
+        cursor: pointer;
     }
 `
 
@@ -119,5 +127,28 @@ export const Match = styled.li`
      
 `
 
+export const Logout = styled(AiOutlineLogout)`
+    margin-left: 3px;
+`
+
+export const Href = styled.a`
+    padding: 16px 22px;
+    margin-right: 10px;
+    border-radius: 30px;
+    outline: none;
+    border:none;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    background: #F0F0F0;
+    text-decoration: none;
+    color: black;
+    font-size: 13.3333px;
+    &:hover {
+        transition: 0.3s ease-in-out;
+        background: #A9A9A9;
+        cursor: pointer;
+    }
+`
 
 

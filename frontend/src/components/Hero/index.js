@@ -43,6 +43,9 @@ const Hero = ()=>{
     // }, [search]);
 
     useEffect(()=>{
+
+        if(search && search.trim().length) return;
+
         // always less than 100
         if(search && search.trim().length)return;
         get(`/api/problems/${difficulty}`, {limit:LIMIT+1, offset:(page-1)*LIMIT})
@@ -57,7 +60,7 @@ const Hero = ()=>{
         }).catch((e)=>{
             console.log(e.message);
         })
-    },[difficulty, page]);
+    },[difficulty, page, search]);
 
     useEffect(()=>setPage(1),[difficulty]);
     

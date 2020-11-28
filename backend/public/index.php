@@ -17,6 +17,7 @@ session_start();
 $_SESSION["c_url"] = "https://api.codechef.com";
 
 $app->add(function ($request, $response, $next) {
+    
 
     // refresh_token();
     $response = $next($request, $response);

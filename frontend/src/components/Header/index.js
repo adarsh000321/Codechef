@@ -11,18 +11,26 @@ import {
     IconWrap,
     PopUp,
     HeaderSearch,
-    Match
+    Match,
+    Logout,
+    Href
 } from "./HeaderStyle";
 import logoIcon from "../../images/logo.svg";
-import {post} from "../../apis/fetch";
+import {get} from "../../apis/fetch";
 import axios from "axios";
 import config from "../../config";
+import {signIn, isSignedIn, signOut} from "./login";
+
+const pptUrl = 'https://docs.google.com/presentation/d/1sUvQ2HfjWzGMl69UYyem9L27HlpvLl9-UYlLxOIctCU/edit?usp=sharing';
+
 
 const Header = ({ switchSearch, search, switchData, switchPage, switchLastSearch}) => {
+
 
     const [logo, setLogo] = useState(true);
     const [match, setMatch] = useState([]);
     const [open, setOpen] = useState(false);
+    const [signedIn, setSignedIn] = useState(isSignedIn());
 
 
     const logoState = (size) => {
@@ -38,6 +46,23 @@ const Header = ({ switchSearch, search, switchData, switchPage, switchLastSearch
         switchSearch(`${new_search},`);
     }
 
+    const switchSignedIn = ()=>{
+        setSignedIn(isSignedIn());
+    }
+
+    const signInOnClick = async ()=>{
+        if(signedIn){
+            setSignedIn(false);
+            signOut();
+        }else{
+            await signIn(switchSignedIn, true);
+            setSignedIn(isSignedIn());
+        }
+    }
+
+    useEffect(()=>signIn(switchSignedIn, false),[]);
+
+
     useEffect(() => {
         logoState(window.innerWidth);
     }, []);
@@ -52,7 +77,7 @@ const Header = ({ switchSearch, search, switchData, switchPage, switchLastSearch
         })
         tags = Array.from(tags);
         switchLastSearch(search);
-        let res = await post(`/api/tags`,undefined, {tags});
+        let res = await get(`/api/tagsearch/${tags.join()}`);
         switchPage(1);
         setMatch([]);
         res && res.length>=0 && switchData(res);
@@ -124,11 +149,12 @@ const Header = ({ switchSearch, search, switchData, switchPage, switchLastSearch
             </HeaderBar>
 
             <HeaderBtn>
-                <Button>
+                <Href href={pptUrl} target={'_blank'}>
                     ABOUT
-                </Button>
-                <Button>
-                    SIGN IN
+                </Href>
+                <Button onClick={()=>signInOnClick()}>
+                    {signedIn?`Hi, ${signedIn}`:"CODECHEF SIGN IN"}
+                    {signedIn && <Logout />}
                 </Button>
             </HeaderBtn>
         </HeaderContainer>

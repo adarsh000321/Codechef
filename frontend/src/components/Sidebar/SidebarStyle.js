@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {FaTimes} from "react-icons/fa";
 
 export const SidebarContainer = styled.div`
     background: #f3f3f3;
@@ -128,4 +129,10 @@ export const TagCount = styled.div`
 export const TagName = styled.div`
     padding: 2px;
     padding-right: 3px;
+    display: flex;
+    align-items: center;
+`
+
+export const Cross = styled(FaTimes)`
+    margin-left: 3px;
 `

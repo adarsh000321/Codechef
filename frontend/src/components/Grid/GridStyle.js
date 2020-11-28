@@ -44,6 +44,7 @@ export const Btn = styled.button`
     &:hover {
         transition: 0.3s ease-in-out;
         background: #A9A9A9;
+        cursor: pointer;
     }
 `
 
